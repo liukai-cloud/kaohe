@@ -1,0 +1,31 @@
+{
+    "configurations":  [
+                           {
+                               "name":  "STM32",
+                               "cStandard":  "c11",
+                               "cppStandard":  "c++17",
+                               "intelliSenseMode":  "windows-clang-arm",
+                               "defines":  [
+                                               "STM32F10X_MD",
+                                               "USE_STDPERIPH_DRIVER"
+                                           ],
+                               "includePath":  [
+                                                   "${workspaceFolder}/Hardware",
+                                                   "${workspaceFolder}/System",
+                                                   "${workspaceFolder}/Start",
+                                                   "${workspaceFolder}/Library/inc",
+                                                   "${workspaceFolder}/Start/m-profile",
+                                                   "${workspaceFolder}/user",
+                                                   "${workspaceFolder}",
+                                                   "D:/Keil_v5/ARM/ARMCLANG/include",
+                                                   "D:/Keil_v5/ARM/ARMCLANG/include/libcxx"
+                                               ],
+                               "browse":  {
+                                              "path":  [
+                                                           "${workspaceFolder}"
+                                                       ]
+                                          }
+                           }
+                       ],
+    "version":  4
+}

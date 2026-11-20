@@ -1,0 +1,20 @@
+{
+    "files.associations":  {
+                               "*.s":  "arm",
+                               "*.h":  "c"
+                           },
+    "editor.tabSize":  4,
+    "editor.detectIndentation":  false,
+    "editor.suggestOnTriggerCharacters":  true,
+    "editor.quickSuggestions":  {
+                                    "other":  true,
+                                    "comments":  false,
+                                    "strings":  false
+                                },
+    "editor.parameterHints.enabled":  true,
+    "editor.suggest.showWords":  true,
+    "[c]":  {
+                "editor.insertSpaces":  false
+            },
+    "C_Cpp.intelliSenseEngine":  "default"
+}

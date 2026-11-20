@@ -1,0 +1,77 @@
+{
+    "version": "2.0.0",
+    "inputs": [
+        {
+            "id": "newProjName",
+            "type": "promptString",
+            "description": "新工程名称（建在 Desktop\\stm32\\ 下）",
+            "default": "2-1 LED"
+        }
+    ],
+    "tasks": [
+        {
+            "label": "Keil: Build",
+            "type": "shell",
+            "command": "powershell",
+            "args": ["-NoProfile","-ExecutionPolicy","Bypass","-File","${workspaceFolder}/.vscode/build.ps1"],
+            "group": { "kind": "build", "isDefault": true },
+            "presentation": { "reveal": "always", "panel": "shared", "clear": true },
+            "problemMatcher": {
+                "owner": "cpp",
+                "fileLocation": "relative",
+                "pattern": {
+                    "regexp": "^(.*?)\\((\\d+)\\):\\s*(error|warning|fatal error)\\s*:\\s*(.*)$",
+                    "file": 1, "line": 2, "severity": 3, "message": 4
+                }
+            }
+        },
+        {
+            "label": "Keil: Rebuild",
+            "type": "shell",
+            "command": "powershell",
+            "args": ["-NoProfile","-ExecutionPolicy","Bypass","-File","${workspaceFolder}/.vscode/build.ps1","-Rebuild"],
+            "group": "build",
+            "presentation": { "reveal": "always", "panel": "shared", "clear": true },
+            "problemMatcher": {
+                "owner": "cpp",
+                "fileLocation": "relative",
+                "pattern": {
+                    "regexp": "^(.*?)\\((\\d+)\\):\\s*(error|warning|fatal error)\\s*:\\s*(.*)$",
+                    "file": 1, "line": 2, "severity": 3, "message": 4
+                }
+            }
+        },
+        {
+            "label": "Keil: Flash",
+            "type": "shell",
+            "command": "powershell",
+            "args": ["-NoProfile","-ExecutionPolicy","Bypass","-File","${workspaceFolder}/.vscode/build.ps1","-Flash"],
+            "presentation": { "reveal": "always", "panel": "shared", "clear": true },
+            "problemMatcher": []
+        },
+        {
+            "label": "Keil: Add current file",
+            "type": "shell",
+            "command": "powershell",
+            "args": ["-NoProfile","-ExecutionPolicy","Bypass","-File","${workspaceFolder}/.vscode/addfile.ps1","-Path","${file}"],
+            "presentation": { "reveal": "always", "panel": "shared", "clear": true },
+            "problemMatcher": []
+        },
+        {
+            "label": "Keil: New project",
+            "type": "shell",
+            "command": "powershell",
+            "args": ["-NoProfile","-ExecutionPolicy","Bypass","-File","C:/Users/wangl/Desktop/stm32/new-project.ps1","-Name","${input:newProjName}"],
+            "presentation": { "reveal": "always", "panel": "shared", "clear": true },
+            "problemMatcher": []
+        },
+        {
+            "label": "Keil: Clean",
+            "type": "shell",
+            "command": "powershell",
+            "args": ["-NoProfile","-ExecutionPolicy","Bypass","-File","${workspaceFolder}/.vscode/build.ps1","-Clean"],
+            "presentation": { "reveal": "always", "panel": "shared", "clear": true },
+            "problemMatcher": []
+        }
+    ]
+}

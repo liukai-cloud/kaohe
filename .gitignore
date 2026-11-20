@@ -1,0 +1,25 @@
+# Keil 编译产物
+Objects/
+Listings/
+DebugConfig/
+*.uvguix.*
+*.bak
+*.bak-*
+*.dep
+*.lnp
+*.scvd
+*.htm
+*.lst
+*.map
+*.axf
+*.hex
+*.bin
+*.o
+*.d
+*.crf
+*.iex
+*.tra
+
+# 系统文件
+Thumbs.db
+desktop.ini
