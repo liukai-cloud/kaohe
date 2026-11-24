@@ -121,11 +121,13 @@ uint8_t Serial_GetRxFlag(void)
 
 
 /*==============================================================================
- *  接收中断：解析 @内容\r\n
+ *  接收中断：解析 "内容\r\n"
  *
- *   S = 0  等包头 '@'
- *   S = 1  一直存字符，直到收到 '\r'
- *   S = 2  等 '\n'，收到说明一包结束
+ *   不再要求 '@' 开头 —— 上位机直接发 "GET A" + 回车即可
+ *   也兼容原来带 '@' 的写法（Cmd_Task 里会跳过 '@'）
+ *
+ *   S = 0  等第一个字符
+ *   S = 1  一直存字符，直到收到 '\r' 或 '\n'
  *============================================================================*/
 void USART1_IRQHandler(void)
 {
@@ -138,35 +140,39 @@ void USART1_IRQHandler(void)
 
 		if(RxState==0)
 		{
-			if(RxData=='@' && Serial_RxFlag==0)
+			/* 等第一个有效字符，空行（\r \n）忽略 */
+			if(Serial_RxFlag==0 && RxData!='\r' && RxData!='\n')
 			{
-				RxState = 1;
 				pRxPacket = 0;
+				Serial_RxPacket[pRxPacket] = RxData;
+				pRxPacket++;
+				RxState = 1;
 			}
 		}
 		else if(RxState==1)
 		{
-			if(RxData=='\r')
-			{
-				RxState = 2;
-			}
-			else
-			{
-				Serial_RxPacket[pRxPacket] = RxData;
-				pRxPacket++;
-				if(pRxPacket>=100) pRxPacket = 0;
-			}
-		}
-		else if(RxState==2)
-		{
-			if(RxData=='\n')
+			/* 收到回车或换行 → 这一包结束 */
+			if(RxData=='\r' || RxData=='\n')
 			{
 				Serial_RxPacket[pRxPacket] = '\0';
 				Serial_RxFlag = 1;
 				RxState = 0;
 			}
+			else
+			{
+				Serial_RxPacket[pRxPacket] = RxData;
+				pRxPacket++;
+				if(pRxPacket>=99) pRxPacket = 99;
+			}
 		}
 
 		USART_ClearITPendingBit(USART1,USART_IT_RXNE);
 	}
+}
+
+/* printf 重定向：把 printf 的每个字符送到串口 */
+int fputc(int ch, FILE *f)
+{
+	Serial_SendByte((uint8_t)ch);
+	return ch;
 }
